@@ -25,7 +25,7 @@ const LoginUser = () => {
 
   return (
     <div className="">
-        
+
     </div>
 
   )
