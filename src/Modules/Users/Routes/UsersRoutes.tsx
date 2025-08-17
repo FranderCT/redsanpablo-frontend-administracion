@@ -1,6 +1,6 @@
 import { createRoute } from "@tanstack/react-router";
 import { dashboardRoute } from "../../Dashboard/Routes/DashboardRoutes";
-import UserProfile from "../Components/UserProfile/UserPhotoProfile";
+import UserProfile from "../Pages/UserProfile";
 
 
 export const usersRoute = createRoute({

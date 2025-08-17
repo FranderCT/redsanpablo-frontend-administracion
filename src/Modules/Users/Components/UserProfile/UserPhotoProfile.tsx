@@ -1,8 +1,8 @@
 
 const UserPhotoProfile = () => {
   return (
-    <div>
-      <h1>hola mundo como estan todos</h1>
+    <div className="h-[80%] w-[40%] bg-amber-400 border">
+      
     </div>
   )
 }
