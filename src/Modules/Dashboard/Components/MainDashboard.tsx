@@ -2,7 +2,7 @@
 
 const MainDashboard = () => {
   return (
-    <div className='bg-amber-50'>MainDashboard</div>
+    <div className='h-full w-full bg-amber-600'></div>
   )
 }
 

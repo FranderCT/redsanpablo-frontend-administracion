@@ -1,8 +1,7 @@
 import { useState } from "react";
-
 import HeaderDashboard from "../Components/Header/HeaderDashboard";
-import MainDashboard from "../Components/MainDashboard";
 import AsideDashboard from "../Components/Sidebard/AsideDashboard";
+import { Outlet } from "@tanstack/react-router";
 
 const DashboardLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,7 +43,7 @@ const DashboardLayout = () => {
           setProfileOpen={setProfileOpen}
         />
         <main className="flex-1 p-6 overflow-y-auto">
-          <MainDashboard />
+          <Outlet /> 
         </main>
       </div>
     </div>

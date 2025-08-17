@@ -1,11 +1,6 @@
-import {
-  Home,
-  BarChart,
-  Users,
-  Settings,
+import {  
   LogOut,
-  FileText,
-  Code2,
+  User,
 } from "lucide-react";
 
 const AsideDashboard = () => {
@@ -19,23 +14,9 @@ const AsideDashboard = () => {
         {/* Navegación */}
         <nav className="flex flex-col gap-4 text-sm text-gray-700">
           <a href="#" className="flex items-center gap-3 hover:text-black">
-            <Home size={18} /> Overview
+            <User size={18} /> Usuarios
           </a>
-          <a href="#" className="flex items-center gap-3 hover:text-black">
-            <BarChart size={18} /> Transactions
-          </a>
-          <a href="#" className="flex items-center gap-3 hover:text-black">
-            <Users size={18} /> Customers
-          </a>
-          <a href="#" className="flex items-center gap-3 hover:text-black">
-            <FileText size={18} /> Reports
-          </a>
-          <a href="#" className="flex items-center gap-3 hover:text-black">
-            <Settings size={18} /> Settings
-          </a>
-          <a href="#" className="flex items-center gap-3 hover:text-black">
-            <Code2 size={18} /> Developer
-          </a>
+          
         </nav>
       </div>
 
