@@ -42,7 +42,7 @@ const DashboardLayout = () => {
           profileOpen={profileOpen}
           setProfileOpen={setProfileOpen}
         />
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 p-6 overflow-y-auto w-full h-full">
           <Outlet /> 
         </main>
       </div>

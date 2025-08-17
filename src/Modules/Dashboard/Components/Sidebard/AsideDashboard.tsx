@@ -1,6 +1,6 @@
 import {  
   LogOut,
-  User,
+  Users2,
 } from "lucide-react";
 
 const AsideDashboard = () => {
@@ -14,9 +14,8 @@ const AsideDashboard = () => {
         {/* Navegación */}
         <nav className="flex flex-col gap-4 text-sm text-gray-700">
           <a href="#" className="flex items-center gap-3 hover:text-black">
-            <User size={18} /> Usuarios
+            <Users2 size={18} /> Usuarios
           </a>
-          
         </nav>
       </div>
 
