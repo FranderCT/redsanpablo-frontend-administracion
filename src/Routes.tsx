@@ -1,10 +1,12 @@
-import { createRootRoute, createRoute } from "@tanstack/react-router";
+import { createRootRoute, Outlet, createRoute } from "@tanstack/react-router";
 import { authRoute, loginRoute } from "./Modules/Auth/Routes/AuthRoutes";
-import { dashboardRoute } from "./Modules/Dashboard/Routes/DashboardRoutes";
-import { userProfileroute } from "./Modules/Users/Routes/UsersRoutes";
+import { dashboardRoute, dashboardIndexRoute } from "./Modules/Dashboard/Routes/DashboardRoutes";
+import { userProfileroute, usersRoute } from "./Modules/Users/Routes/UsersRoutes";
 
-
-export const rootRoute = createRootRoute();
+export const rootRoute = createRootRoute({
+  component: () => <Outlet />,
+  notFoundComponent: () => <div>Página No Encontrada</div>
+});
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -17,8 +19,10 @@ export const routeTree = rootRoute.addChildren([
   authRoute.addChildren([
     loginRoute,
   ]),
-  dashboardRoute.addChildren({
-    userProfileroute
-  }
-  )
+  dashboardRoute.addChildren([
+    usersRoute.addChildren([
+      userProfileroute
+    ]),
+    dashboardIndexRoute
+])
 ]);

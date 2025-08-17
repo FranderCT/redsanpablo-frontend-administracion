@@ -7,3 +7,9 @@ export const dashboardRoute = createRoute({
     path: 'dashboard',
     component: DashboardLayout
 })
+
+export const dashboardIndexRoute = createRoute({
+  getParentRoute: () => dashboardRoute,
+  path: "/",                    
+  component: () => <h1>Dashboard</h1>,
+});
