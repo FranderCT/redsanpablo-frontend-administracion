@@ -13,3 +13,9 @@ export const userProfileroute = createRoute({
     path: 'profile',
     component: UserProfile
 })
+
+export const userProfileEditRoute = createRoute({
+    getParentRoute: () => usersRoute,
+    path: 'edit',
+    component: () => <div>hola mundo</div>
+})
