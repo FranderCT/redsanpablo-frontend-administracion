@@ -1,8 +1,12 @@
 import { Pencil } from "lucide-react";
 import UserPhotoProfile from "../Components/UserProfile/UserPhotoProfile";
 import UserProfileDetails from "../Components/UserProfile/UserProfileDetails";
+import { useGetUserProfileById } from "../Hooks/UsersHooks";
 
 const UserProfile = () => {
+  const userID = Number(localStorage.getItem("ID"))
+  const {UserProfile} = useGetUserProfileById(1);
+
   return (
     <div className="min-h-full w-full ">
       <div
@@ -60,7 +64,7 @@ const UserProfile = () => {
         >
           {/* Card izquierda */}
           <div className="w-full min-h-[260px]">
-            <UserPhotoProfile />
+            <UserPhotoProfile User={UserProfile}/>
           </div>
 
           {/* Card derecha */}
