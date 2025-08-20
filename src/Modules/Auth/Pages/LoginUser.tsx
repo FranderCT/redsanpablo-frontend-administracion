@@ -2,11 +2,13 @@ import { useLogin } from "../Hooks/AuthHooks";
 import { useForm } from "@tanstack/react-form";
 import { AuthInitialState } from "../Models/Auth";
 import { AuthSchema } from "../Schemas/AuthSchemas";
+import { useNavigate } from "@tanstack/react-router";
 
 
 const LoginUser = () => {
   const loginMutation = useLogin();
-
+  const navigate = useNavigate();
+  
   const form = useForm({
     defaultValues: AuthInitialState,
     validators: { onChange: AuthSchema },
@@ -14,6 +16,7 @@ const LoginUser = () => {
       try {
         await loginMutation.mutateAsync(value);
         console.log("Inicio de Sesión Exitoso");
+         navigate({ to: "/dashboard" });
       } catch {
         console.log("error");
       }
@@ -45,7 +48,7 @@ const LoginUser = () => {
       >
         {/* Campos */}
         <div className="w-full flex flex-col gap-3">
-          <form.Field name="email">
+          <form.Field name="Email">
             {(field) => (
               <>
                 <input
@@ -67,7 +70,7 @@ const LoginUser = () => {
             )}
           </form.Field>
 
-          <form.Field name="password">
+          <form.Field name="Password">
             {(field) => (
               <>
                 <input

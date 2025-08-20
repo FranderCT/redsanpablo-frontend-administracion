@@ -2,8 +2,13 @@ import {
   LogOut,
   Users2,
 } from "lucide-react";
+import { useLogout } from "../../../Auth/Hooks/AuthHooks";
+
 
 const AsideDashboard = () => {
+
+  const logout = useLogout();
+
   return (
     <div className="flex flex-col h-full justify-between p-4">
       
@@ -21,12 +26,12 @@ const AsideDashboard = () => {
 
       {/* Opción de cerrar sesión abajo */}
       <div>
-        <a
-          href="#"
+        <button
+          onClick={logout}
           className="flex items-center gap-3 text-sm text-red-600 hover:text-red-800"
         >
           <LogOut size={18} /> Cerrar sesión
-        </a>
+        </button>
       </div>
     </div>
   );

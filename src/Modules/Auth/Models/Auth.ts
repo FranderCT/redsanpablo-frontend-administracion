@@ -1,9 +1,9 @@
 export interface Auth {
-    email: string;
-    password: string;
+    Email: string;
+    Password: string;
 }
 
 export const AuthInitialState: Auth = {
-    email: '',
-    password: '',
+    Email: '',
+    Password: '',
 };

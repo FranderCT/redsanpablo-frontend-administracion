@@ -1,3 +1,5 @@
+import type { UserProfile } from "../../Models/User";
+
 const Row = ({
   label,
   children,
@@ -11,7 +13,11 @@ const Row = ({
   </div>
 );
 
-const UserProfileDetails = () => {
+type Props = {
+  User? : UserProfile
+}
+
+const UserProfileDetails = ({User} : Props) => {
   return (
     <article className="h-full w-full bg-white border border-[#091540]/20 rounded-xl shadow-sm p-6 lg:p-8">
       <h3 className="text-center text-[#091540] font-extrabold text-lg lg:text-xl mb-4">
@@ -20,15 +26,15 @@ const UserProfileDetails = () => {
 
       <Row label="Correo">
         <a className="underline underline-offset-2" href="mailto:frandercarrillo2@gmail.com">
-          frandercarrillo2@gmail.com
+          {User?.Email}
         </a>
       </Row>
-      <Row label="Fecha de Nacimiento">17-07-2002</Row>
-      <Row label="Teléfono">+506 86505959</Row>
-      <Row label="Cédula">504440503</Row>
-      <Row label="Nis">666</Row>
+      <Row label="Fecha de Nacimiento">{User?.BirthDate}</Row>
+      <Row label="Teléfono">{User?.PhoneNumber}</Row>
+      <Row label="Cédula">5-444-503</Row>
+      <Row label="Nis">{User?.Nis}</Row>
       <Row label="Rol">Invitado</Row>
-      <Row label="Dirección">200 metros al este de carnicería la union</Row>
+      <Row label="Dirección">{User?.Address}</Row>
     </article>
   );
 };
