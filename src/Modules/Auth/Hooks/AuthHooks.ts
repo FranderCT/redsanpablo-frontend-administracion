@@ -18,7 +18,7 @@ export function useLogout() {
   return () => {
     if (localStorage.getItem("token")) {
       localStorage.removeItem("token");
-      navigate({ to: "/auth/login" }); // ✅ navegación correcta
+      navigate({ to: "/auth/login" }); 
     }
   };
 }
