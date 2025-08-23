@@ -1,10 +1,10 @@
 import { Pencil } from "lucide-react";
 import UserPhotoProfile from "../Components/UserProfile/UserPhotoProfile";
 import UserProfileDetails from "../Components/UserProfile/UserProfileDetails";
-import { useGetUserProfileById } from "../Hooks/UsersHooks";
+import { useGetUserProfile } from "../Hooks/UsersHooks";
 
 const UserProfile = () => {
-  const {UserProfile} = useGetUserProfileById();
+  const {UserProfile} = useGetUserProfile();
 
   return (
     <div className="min-h-full w-full ">
