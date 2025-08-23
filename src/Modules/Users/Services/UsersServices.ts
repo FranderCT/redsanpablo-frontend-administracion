@@ -7,7 +7,7 @@ export async function getUserProfile(): Promise<UserProfile> {
   return response.data;
 }
 
-export async function updateUserProfile() : Promise<EditUser>{
-  const res = await apiAxios.put(`users/me`)
+export async function updateUserProfile(User: EditUser) : Promise<EditUser>{
+  const res = await apiAxios.put(`users/me`, User)
   return res.data;
 }

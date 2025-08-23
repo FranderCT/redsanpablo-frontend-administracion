@@ -1,5 +1,6 @@
-import { getUserProfile } from "../Services/UsersServices";
-import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { getUserProfile, updateUserProfile } from "../Services/UsersServices";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 
 export const useGetUserProfile = () => {
@@ -10,4 +11,18 @@ export const useGetUserProfile = () => {
 
     return { UserProfile, isLoading, error };
 }
+
+export const useUpdateUserProfile = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: updateUserProfile,
+    onSuccess: () => {
+      console.log("Usuario Actualizado");
+      navigate({ to: "/dashboard/users/profile" });
+    },
+  });
+};
+
+
+
 

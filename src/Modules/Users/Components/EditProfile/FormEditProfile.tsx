@@ -2,6 +2,7 @@ import { useForm } from "@tanstack/react-form";
 import { EditUserInitialState } from "../../Models/EditUser";
 
 import type { UserProfile } from "../../Models/User";
+import { useUpdateUserProfile } from "../../Hooks/UsersHooks";
 
 type Props = {
   User? : UserProfile
@@ -9,14 +10,18 @@ type Props = {
 
 
 const FormEditProfile = ({User} : Props) => {
-    
+    const useUpdateProfile = useUpdateUserProfile();
+
+
     const form = useForm({
         defaultValues: EditUserInitialState,
         onSubmit: async ({ value }) => {
           try {
-            console.log("Inicio de Sesión Exitoso");
+            await useUpdateProfile.mutateAsync(value);
+            console.log("Actualizacion exitosa");
+            
           } catch {
-            console.log("error");
+            console.log("error al actualizar el usuario");
           }
         },
       });
@@ -118,15 +123,9 @@ const FormEditProfile = ({User} : Props) => {
           {([canSubmit, isSubmitting]) => (
             <div
               className="
-                mt-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-6
+                mt-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-6 
               "
             >
-              <a
-                href="/auth/forgotPassword"
-                className="underline text-[#091540] font-medium hover:text-[#1789FC] text-sm text-center sm:text-left"
-              >
-                ¿Olvidó su contraseña?
-              </a>
 
               <button
                 type="submit"

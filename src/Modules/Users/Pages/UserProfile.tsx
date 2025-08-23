@@ -2,10 +2,11 @@ import { Pencil } from "lucide-react";
 import UserPhotoProfile from "../Components/UserProfile/UserPhotoProfile";
 import UserProfileDetails from "../Components/UserProfile/UserProfileDetails";
 import { useGetUserProfile } from "../Hooks/UsersHooks";
+import { useNavigate } from "@tanstack/react-router";
 
 const UserProfile = () => {
   const {UserProfile} = useGetUserProfile();
-
+  const navigate = useNavigate();
   return (
     <div className="min-h-full w-full ">
       <div
@@ -46,6 +47,7 @@ const UserProfile = () => {
                        hover:bg-red-50 active:bg-red-100 transition
                        focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2"
             aria-label="Editar perfil"
+            onClick={() => navigate({ to: "/dashboard/users/profile/edit" })}
           >
             <Pencil size={22} />
             <span className="sm:block text-xs sm:text-sm font-medium">Editar</span>
