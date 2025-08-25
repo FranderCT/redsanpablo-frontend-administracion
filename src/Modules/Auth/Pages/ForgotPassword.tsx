@@ -4,6 +4,7 @@ import { useForgotPasswd } from '../Hooks/AuthHooks';
 import { useNavigate } from '@tanstack/react-router';
 import g29 from '../assets/g29.png';
 import { useState } from 'react';
+import { ForgorPsswrdSchemas } from '../Schemas/AuthSchemas';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const ForgotPassword = () => {
   const useForgotPasswdMutation = useForgotPasswd();
   const form = useForm({
     defaultValues: ForgotPasswordInitialState,
-    // validators: { onChange: RegisterSchema },
+     validators: { onChange: ForgorPsswrdSchemas },
     onSubmit: async ({ value }) => {
       try{
         await useForgotPasswdMutation.mutateAsync(value);
@@ -154,13 +155,6 @@ const ForgotPassword = () => {
             <p className="font-extrabold text-[#091540]">
               ¡Revise su Correo Electrónico para cambiar su contraseña!
             </p>
-            <button
-              type="button"
-              onClick={goLogin}
-              className="underline font-semibold text-[#1789FC] hover:text-[#091540]"
-            >
-              Ir a iniciar sesión
-            </button>
           </div>
         )}
 

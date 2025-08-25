@@ -1,7 +1,7 @@
 import { useLogin } from "../Hooks/AuthHooks";
 import { useForm } from "@tanstack/react-form";
 import { AuthInitialState } from "../Models/Auth";
-import { AuthSchema } from "../Schemas/AuthSchemas";
+import { LoginSchemas } from "../Schemas/AuthSchemas";
 import { useNavigate } from "@tanstack/react-router";
 import g29 from '../assets/g29.png';
 
@@ -16,7 +16,7 @@ const LoginUser = () => {
   
   const form = useForm({
     defaultValues: AuthInitialState,
-    validators: { onChange: AuthSchema },
+    validators: { onChange: LoginSchemas },
     onSubmit: async ({ value }) => {
       try {
         await loginMutation.mutateAsync(value);

@@ -4,28 +4,32 @@ import { ResetPasswordInitialState } from "../Models/ResetPassword";
 import { useResetPassword } from "../Hooks/AuthHooks";
 import { useState } from "react";
 import g29 from '../assets/g29.png';
+import { ResetPsswrdSchemas } from "../Schemas/AuthSchemas";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const resetPasswdMutation = useResetPassword();
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const [isError, setIsError] = useState(false);
   // Leer ?token=... desde la URL
   const token = new URLSearchParams(window.location.search).get("token") ?? "";
   console.log("URL token?", token); // TEMP
 
   const form = useForm({
     defaultValues: ResetPasswordInitialState,
+    validators : {onChange : ResetPsswrdSchemas},
     onSubmit: async ({ value }) => {
+        
       if (value.NewPassword !== value.ConfirmPassword) {
-        alert("Las contraseñas no coinciden");
+        setIsError(true);
+        form.reset();
         return;
       }
       if (!token) {
         alert("Token no encontrado en la URL");
         return;
       }
-
+      
       await resetPasswdMutation.mutateAsync({
         payload: value,
         token,
@@ -33,6 +37,7 @@ const ResetPassword = () => {
 
       form.reset();
       setIsSuccess(true);
+      setIsError(false);
       // La navegación ocurre en onSuccess del hook si así lo definiste.
     },
   });
@@ -165,6 +170,20 @@ const ResetPassword = () => {
           <div className="mt-6 text-center">
             <p className="font-extrabold text-[#091540]">
               ¡Se ha restablecido la contraseña correctamente!
+            </p>
+            <button
+              type="button"
+              onClick={goLogin}
+              className="underline font-semibold text-[#1789FC] hover:text-[#091540]"
+            >
+              Ir a iniciar sesión
+            </button>
+          </div>
+        )}
+        {isError && (
+             <div className="mt-6 text-center">
+            <p className="font-extrabold text-[#091540]">
+              Las constraseñas no coinciden. ¡Intente nuevamente!
             </p>
             <button
               type="button"
