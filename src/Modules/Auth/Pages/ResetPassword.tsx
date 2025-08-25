@@ -55,7 +55,7 @@ const ResetPassword = () => {
       <img
         src={g29}
         alt="Logo ASADA"
-        className="absolute inset-0 h-100 opacity-4 mx-auto my-auto pointer-events-none select-none "
+        className="absolute inset-0 h-90 opacity-4 mx-auto my-auto pointer-events-none select-none "
       />
 
       {/* Título */}
