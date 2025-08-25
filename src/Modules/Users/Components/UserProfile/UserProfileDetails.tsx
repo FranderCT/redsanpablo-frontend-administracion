@@ -1,69 +1,61 @@
-import type { UserProfile } from "../../Models/User"
+import type { UserProfile } from "../../Models/User";
 
 type Props = {
-  User?: UserProfile
-}
+  User?: UserProfile;
+  loading?: boolean;
+};
 
-const UserProfileDetails = ({User} : Props) => {
+const formatDate = (iso?: string) => {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return iso; // por si viene ya formateada
+  const dd = String(d.getDate()).padStart(2, "0");
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const yyyy = d.getFullYear();
+  return `${dd}-${mm}-${yyyy}`;
+};
+
+const field = (label: string, value?: string | number) => (
+  <div className="py-2 border-b border-dashed border-gray-300">
+    <p className="text-[12px] text-gray-500">{label}</p>
+    <span className="text-sm font-medium text-[#091540] break-all">
+      {value ?? "—"}
+    </span>
+  </div>
+);
+
+const UserProfileDetails = ({ User, loading }: Props) => {
+  const roles = User?.Roles?.map((r: any) => r?.Rolname).filter(Boolean).join(", ");
+
   return (
-    <article className="md:col-span-2 bg-[#F9F5FF] border border-gray-200 gap-4 shadow-xl rounded-sm p-6">
-          <h3 className="text-center font-semibold text-[#091540] mb-4">
-            Su información
-          </h3>
+    <article className="md:col-span-2 bg-[#f9fafb] border border-gray-200 shadow-xl rounded-sm p-6">
+      <h3 className="text-center font-semibold text-[#091540] mb-4">
+        {loading ? "Cargando información..." : "Su información"}
+      </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
-            {/* Fila: Correo / Fecha nacimiento */}
-            <div className="py-2 border-b border-dashed border-gray-300">
-              <p className="text-[12px] text-gray-500">Correo</p>
-              <span className="text-sm font-medium break-all text-[#091540]">
-                {User?.Email}
-              </span>
-            </div>
-            <div className="py-2 border-b border-dashed border-gray-300">
-              <p className="text-[12px] text-gray-500">Fecha de Nacimiento</p>
-              <span className="text-sm font-medium text-[#091540]">
-                {User?.BirthDate}
-              </span>
-            </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+        {/* Correo / Fecha de Nacimiento */}
+        {field("Correo", User?.Email)}
+        {field("Fecha de Nacimiento", formatDate(User?.BirthDate))}
 
-            {/* Fila: Teléfono / Cédula */}
-            <div className="py-2 border-b border-dashed border-gray-300">
-              <p className="text-[12px] text-gray-500">Teléfono</p>
-              <span className="text-sm font-medium text-[#091540]">
-                {User?.PhoneNumber}
-              </span>
-            </div>
-            <div className="py-2 border-b border-dashed border-gray-300">
-              <p className="text-[12px] text-gray-500">Cédula</p>
-              <span className="text-sm font-medium text-[#091540]">
-                {User?.IDcard}
-              </span>
-            </div>
+        {/* Teléfono / Cédula */}
+        {field("Teléfono", User?.PhoneNumber)}
+        {field("Cédula", User?.IDcard)}
 
-            {/* Fila: NIS / Rol */}
-            <div className="py-2 border-b border-dashed border-gray-300">
-              <p className="text-[12px] text-gray-500">NIS</p>
-              <span className="text-sm font-medium text-[#091540]">
-                {User?.Nis}
-              </span>
-            </div>
-            <div className="py-2 border-b border-dashed border-gray-300">
-              <p className="text-[12px] text-gray-500">Rol</p>
-              <span className="text-sm font-medium text-[#091540]">
-                {User?.Roles?.map(role => role.Rolname).join(', ')}
-              </span>
-            </div>
+        {/* NIS / Rol */}
+        {field("NIS", User?.Nis)}
+        {field("Rol", roles)}
 
-            {/* Fila: Dirección (a lo ancho) */}
-            <div className="sm:col-span-2 py-2">
-              <p className="text-[12px] text-gray-500">Dirección</p>
-              <span className="text-sm font-medium text-[#091540]">
-                {User?.Address}
-              </span>
-            </div>
+        {/* Dirección (ancho completo) */}
+        <div className="sm:col-span-2 py-2">
+          <p className="text-[12px] text-gray-500">Dirección</p>
+          <span className="text-sm font-medium text-[#091540] break-words">
+            {User?.Address ?? "—"}
+          </span>
         </div>
+      </div>
     </article>
-  )
-}
+  );
+};
 
-export default UserProfileDetails
+export default UserProfileDetails;
