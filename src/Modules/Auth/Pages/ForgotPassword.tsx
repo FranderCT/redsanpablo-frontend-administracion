@@ -3,9 +3,12 @@ import { ForgotPasswordInitialState } from '../Models/ForgotPassword';
 import { useForgotPasswd } from '../Hooks/AuthHooks';
 import { useNavigate } from '@tanstack/react-router';
 import g29 from '../assets/g29.png';
+import { useState } from 'react';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false)
 
   const goLogin = () => {
     navigate({ to: '/auth/login' });
@@ -16,8 +19,15 @@ const ForgotPassword = () => {
     defaultValues: ForgotPasswordInitialState,
     // validators: { onChange: RegisterSchema },
     onSubmit: async ({ value }) => {
-      await useForgotPasswdMutation.mutateAsync(value);
-      console.log('exito');
+      try{
+        await useForgotPasswdMutation.mutateAsync(value);
+        console.log('exito');
+        setIsSuccess(true);
+      }catch(err)
+      {
+        setIsError(true);
+      }
+      
     },
   });
 
@@ -138,6 +148,37 @@ const ForgotPassword = () => {
             </div>
           )}
         </form.Subscribe>
+
+        {isSuccess && (
+          <div className="mt-6 text-center">
+            <p className="font-extrabold text-[#091540]">
+              ¡Revise su Correo Electrónico para cambiar su contraseña!
+            </p>
+            <button
+              type="button"
+              onClick={goLogin}
+              className="underline font-semibold text-[#1789FC] hover:text-[#091540]"
+            >
+              Ir a iniciar sesión
+            </button>
+          </div>
+        )}
+
+        {isError && (
+          <div className="mt-6 text-center">
+            <p className="font-extrabold text-[#091540]">
+              Correo Electrónico o Cédula Inválidos.
+            </p>
+            <button
+              type="button"
+              onClick={goLogin}
+              className="underline font-semibold text-[#1789FC] hover:text-[#091540]"
+            >
+              Ir a iniciar sesión
+            </button>
+          </div>
+        )}
+
       </form>
     </div>
   );
