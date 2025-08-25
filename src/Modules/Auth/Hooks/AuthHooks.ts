@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { Login } from "../Services/LoginService";
+import { ForgotPasswd, Login, ResetPasswd } from "../Services/AuthServices";
 import { useNavigate } from "@tanstack/react-router";
+import type { ResetPassword } from "../Models/ResetPassword";
 
 export const useLogin = () => {
     const mutation = useMutation({
@@ -21,4 +22,30 @@ export function useLogout() {
       navigate({ to: "/auth/login" }); 
     }
   };
+}
+
+
+type ResetArgs = { payload: ResetPassword; token: string };
+
+export const useResetPassword = () => {
+
+  return useMutation({
+    mutationFn: ({ payload, token }: ResetArgs) => ResetPasswd(payload, token),
+    onSuccess: () => {
+      console.log("Contraseña cambiada");
+    },
+  });
+};
+
+export const useForgotPasswd = () => {
+    const mutation = useMutation({
+        mutationFn: ForgotPasswd,
+        onSuccess: () =>{
+            console.log('Correo enviado')
+        },
+        onError: () =>{
+          console.log('error')
+        }
+    })
+    return mutation;
 }

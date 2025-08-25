@@ -8,6 +8,10 @@ import { useNavigate } from "@tanstack/react-router";
 const LoginUser = () => {
   const loginMutation = useLogin();
   const navigate = useNavigate();
+
+  const goFotgotPsswrd = () => {
+    navigate({to : '/auth/forgot-password'})
+  }
   
   const form = useForm({
     defaultValues: AuthInitialState,
@@ -26,8 +30,8 @@ const LoginUser = () => {
   return (
     <div
       className="
-        w-[97%] sm:w-[80%] md:w-[60%] lg:w-[40%]
-        h-[50%] md:h-[40%]
+        w-[97%] sm:w-[80%] md:w-[60%] lg:w-[40%] sm:h-100dhv
+        h-[40%] md:h-[40%]
         max-w-md sm:min-w-[320px]
         bg-white border border-gray-200 p-6 sm:p-8
         flex flex-col items-center justify-center
@@ -101,12 +105,12 @@ const LoginUser = () => {
                 mt-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-6
               "
             >
-              <a
-                href="/auth/forgotPassword"
+              <button
                 className="underline text-[#091540] font-medium hover:text-[#1789FC] text-sm text-center sm:text-left"
+                onClick={goFotgotPsswrd}
               >
                 ¿Olvidó su contraseña?
-              </a>
+              </button>
 
               <button
                 type="submit"
