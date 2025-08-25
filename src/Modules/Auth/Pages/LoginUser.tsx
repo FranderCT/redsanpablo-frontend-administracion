@@ -30,15 +30,16 @@ const LoginUser = () => {
   return (
     <div
       className="
-        w-[97%] sm:w-[80%] md:w-[60%] lg:w-[40%] sm:h-100dhv
+        w-[97%] sm:w-[80%] md:w-[60%] lg:w-[40%] 
         h-[40%] md:h-[40%]
         max-w-md sm:min-w-[320px]
         bg-white border border-gray-200 p-6 sm:p-8
         flex flex-col items-center justify-center
+        
       "
     >
       {/* Título */}
-      <h1 className="text-2xl sm:text-3xl font-extrabold text-[#091540] text-center mb-6 sm:mb-8 ">
+      <h1 className="text-3xl sm:text-3xl font-extrabold text-[#091540] text-center mb-6 sm:mb-8 ">
         Iniciar sesión
       </h1>
 
