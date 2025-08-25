@@ -3,6 +3,7 @@ import { useForm } from "@tanstack/react-form";
 import { AuthInitialState } from "../Models/Auth";
 import { AuthSchema } from "../Schemas/AuthSchemas";
 import { useNavigate } from "@tanstack/react-router";
+import g29 from '../assets/g29.png';
 
 
 const LoginUser = () => {
@@ -30,16 +31,23 @@ const LoginUser = () => {
   return (
     <div
       className="
-        w-[97%] sm:w-[80%] md:w-[60%] lg:w-[40%] 
-        h-[40%] md:h-[40%]
+        relative
+        w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%]
+        h-[60%] md:h-[40%]
         max-w-md sm:min-w-[320px]
         bg-white border border-gray-200 p-6 sm:p-8
         flex flex-col items-center justify-center
-        
+        shadow-xl
       "
     >
+      {/* Marca de agua */}
+      <img
+        src={g29}
+        alt="Logo ASADA"
+        className="absolute inset-0 h-90 opacity-4 mx-auto my-auto pointer-events-none select-none "
+      />
       {/* Título */}
-      <h1 className="text-3xl sm:text-3xl font-extrabold text-[#091540] text-center mb-6 sm:mb-8 ">
+      <h1 className="text-5xl sm:text-3xl font-extrabold text-[#091540] text-center mb-6 sm:mb-8 ">
         Iniciar sesión
       </h1>
 
@@ -61,7 +69,7 @@ const LoginUser = () => {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Correo electrónico"
+                  placeholder="Ingrese su Correo electrónico"
                   autoComplete="email"
                   className="w-full px-4 py-3 border border-gray-300  text-[#091540] text-sm outline-none focus:ring-2 focus:ring-[#1789FC]/60"
                 />
@@ -83,7 +91,7 @@ const LoginUser = () => {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  placeholder="Contraseña"
+                  placeholder="Ingrese su Contraseña"
                   autoComplete="current-password"
                   className="w-full px-4 py-3 border border-gray-300 text-[#091540] text-sm outline-none focus:ring-2 focus:ring-[#1789FC]/60"
                 />

@@ -3,7 +3,7 @@ import { Outlet } from '@tanstack/react-router';
 
 const AuthLayout = () => {
   return (
-    <div className='h-screen w-screen flex flex-col items-center justify-center bg-[#E5E5E5] bg-[url(/)]  bg-cover bg-center'>
+    <div className='h-[100dvh]  w-screen flex flex-col items-center justify-center bg-[#]  bg-cover bg-center sm:h-screen '>
       <Outlet /> 
     </div>
   )

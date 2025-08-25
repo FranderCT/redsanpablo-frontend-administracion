@@ -3,6 +3,7 @@ import { rootRoute } from "../../../Routes";
 import AuthLayout from "../Layouts/AuthLayout";
 import LoginUser from "../Pages/LoginUser";
 import ForgotPassword from "../Pages/ForgotPassword";
+import ResetPassword from "../Pages/ResetPassword";
 
 export const authRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -23,3 +24,8 @@ export const forgotPasswordRoute = createRoute({
 })
 
 
+export const resetPasswordRoute = createRoute({
+  getParentRoute: () => authRoute,
+  path : 'reset-password',
+  component: ResetPassword
+})
