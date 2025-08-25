@@ -1,4 +1,8 @@
+import type { Role } from "./Role";
+
+
 export interface UserProfile{
+    IDcard : string;
     Name : string;
     Surname1 : string;
     Surname2 : string;
@@ -7,4 +11,5 @@ export interface UserProfile{
     PhoneNumber: string;
     BirthDate: string;
     Address: string;
+    Roles : Role[]
 }

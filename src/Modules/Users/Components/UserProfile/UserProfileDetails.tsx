@@ -1,42 +1,69 @@
-import type { UserProfile } from "../../Models/User";
-
-const Row = ({
-  label,
-  children,
-}: {
-  label: string;
-  children: React.ReactNode;
-}) => (
-  <div className="grid grid-cols-1 sm:grid-cols-[180px,1fr] gap-2 py-3 border-b border-dashed border-[#091540]/20 last:border-b-0">
-    <span className="text-[#091540]/70">{label}</span>
-    <div className="text-[#091540] font-semibold">{children}</div>
-  </div>
-);
+import type { UserProfile } from "../../Models/User"
 
 type Props = {
-  User? : UserProfile
+  User?: UserProfile
 }
 
 const UserProfileDetails = ({User} : Props) => {
   return (
-    <article className="h-full w-full bg-white border border-[#091540]/20 rounded-xl shadow-sm p-6 lg:p-8">
-      <h3 className="text-center text-[#091540] font-extrabold text-lg lg:text-xl mb-4">
-        Su información
-      </h3>
+    <article className="md:col-span-2 bg-[#F9F5FF] border border-gray-200 gap-4 shadow-xl rounded-sm p-6">
+          <h3 className="text-center font-semibold text-[#091540] mb-4">
+            Su información
+          </h3>
 
-      <Row label="Correo">
-        <a className="underline underline-offset-2" href="mailto:frandercarrillo2@gmail.com">
-          {User?.Email}
-        </a>
-      </Row>
-      <Row label="Fecha de Nacimiento">{User?.BirthDate}</Row>
-      <Row label="Teléfono">{User?.PhoneNumber}</Row>
-      <Row label="Cédula">5-444-503</Row>
-      <Row label="Nis">{User?.Nis}</Row>
-      <Row label="Rol">Invitado</Row>
-      <Row label="Dirección">{User?.Address}</Row>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+            {/* Fila: Correo / Fecha nacimiento */}
+            <div className="py-2 border-b border-dashed border-gray-300">
+              <p className="text-[12px] text-gray-500">Correo</p>
+              <span className="text-sm font-medium break-all text-[#091540]">
+                {User?.Email}
+              </span>
+            </div>
+            <div className="py-2 border-b border-dashed border-gray-300">
+              <p className="text-[12px] text-gray-500">Fecha de Nacimiento</p>
+              <span className="text-sm font-medium text-[#091540]">
+                {User?.BirthDate}
+              </span>
+            </div>
+
+            {/* Fila: Teléfono / Cédula */}
+            <div className="py-2 border-b border-dashed border-gray-300">
+              <p className="text-[12px] text-gray-500">Teléfono</p>
+              <span className="text-sm font-medium text-[#091540]">
+                {User?.PhoneNumber}
+              </span>
+            </div>
+            <div className="py-2 border-b border-dashed border-gray-300">
+              <p className="text-[12px] text-gray-500">Cédula</p>
+              <span className="text-sm font-medium text-[#091540]">
+                {User?.IDcard}
+              </span>
+            </div>
+
+            {/* Fila: NIS / Rol */}
+            <div className="py-2 border-b border-dashed border-gray-300">
+              <p className="text-[12px] text-gray-500">NIS</p>
+              <span className="text-sm font-medium text-[#091540]">
+                {User?.Nis}
+              </span>
+            </div>
+            <div className="py-2 border-b border-dashed border-gray-300">
+              <p className="text-[12px] text-gray-500">Rol</p>
+              <span className="text-sm font-medium text-[#091540]">
+                {User?.Roles?.map(role => role.Rolname).join(', ')}
+              </span>
+            </div>
+
+            {/* Fila: Dirección (a lo ancho) */}
+            <div className="sm:col-span-2 py-2">
+              <p className="text-[12px] text-gray-500">Dirección</p>
+              <span className="text-sm font-medium text-[#091540]">
+                {User?.Address}
+              </span>
+            </div>
+        </div>
     </article>
-  );
-};
+  )
+}
 
-export default UserProfileDetails;
+export default UserProfileDetails
