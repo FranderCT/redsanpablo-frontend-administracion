@@ -1,13 +1,16 @@
-import type { UserProfile } from "../../Models/User"
+import type { Users } from "../../Models/Users"
 
 type Props = {
-  user? : UserProfile
+  user? : Users
 }
 
 const UsersTables = ({user}: Props) => {
   return (
-    <div>
-      {user?.Name}
+    <div
+    key={user?.Id}
+    >
+      Nombre {user?.Name}
+      email {user?.Email}
     </div>
   )
 }

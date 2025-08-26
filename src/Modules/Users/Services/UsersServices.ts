@@ -1,6 +1,7 @@
 import apiAxios from "../../../Api/apiConfig";
 import type { EditUser } from "../Models/EditUser";
-import type { User, UserProfile } from "../Models/User";
+import type { UserProfile } from "../Models/User";
+import type { Users } from "../Models/Users";
 
 export async function getUserProfile(): Promise<UserProfile> {
   const response = await apiAxios.get(`users/me`);
@@ -12,8 +13,7 @@ export async function updateUserProfile(User: EditUser) : Promise<EditUser>{
   return res.data;
 }
 
-export async function getAllUsers () : Promise<User[]>{
-  const res = await apiAxios.get(`/users`)
-  return res.data
+export async function getAllUsers(): Promise<Users[]> {
+  const res = await apiAxios.get<Users[]>("/users");
+  return res.data;
 }
-

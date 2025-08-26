@@ -24,11 +24,10 @@ export const useUpdateUserProfile = () => {
 };
 
 export const useGetAllUsers = () => {
-  const {data: users, isLoading, error} = useQuery({
-    queryKey: ['users'],
-    queryFn: () => getAllUsers()
+  const { data: usersProfiles, isPending, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: getAllUsers,
   });
-
-  return {users, isLoading, error}
-}
+  return { usersProfiles, isPending, error };
+};
 
