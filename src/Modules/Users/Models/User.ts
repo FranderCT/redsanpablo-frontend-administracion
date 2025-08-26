@@ -13,3 +13,17 @@ export interface UserProfile{
     Address: string;
     Roles : Role[]
 }
+
+export interface User{
+    Id: number
+    IDcard : string;
+    Name : string;
+    Surname1 : string;
+    Surname2 : string;
+    Nis: string;
+    Email: string;
+    PhoneNumber: string;
+    BirthDate: string;
+    Address: string;
+    Roles : Role[]
+}

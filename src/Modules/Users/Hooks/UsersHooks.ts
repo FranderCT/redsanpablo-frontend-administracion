@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { getUserProfile, updateUserProfile } from "../Services/UsersServices";
+import { getAllUsers, getUserProfile, updateUserProfile } from "../Services/UsersServices";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 
@@ -23,6 +23,12 @@ export const useUpdateUserProfile = () => {
   });
 };
 
+export const useGetAllUsers = () => {
+  const {data: users, isLoading, error} = useQuery({
+    queryKey: ['users'],
+    queryFn: () => getAllUsers()
+  });
 
-
+  return {users, isLoading, error}
+}
 
