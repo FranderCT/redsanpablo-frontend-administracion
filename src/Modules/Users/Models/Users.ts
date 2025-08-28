@@ -11,5 +11,6 @@ export interface Users{
     PhoneNumber: string;
     BirthDate: string;
     Address: string;
+    IsActive : boolean
     Roles : Role[]
 }

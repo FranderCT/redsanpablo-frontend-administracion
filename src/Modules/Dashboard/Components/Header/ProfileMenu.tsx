@@ -1,47 +1,88 @@
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { User, Settings, LogOut } from "lucide-react";
 
-const ProfileMenu = ({
-  profileOpen,
-  setProfileOpen,
-}: {
+type Props = {
   profileOpen: boolean;
-  setProfileOpen: (val: boolean) => void;
-}) => {
+  setProfileOpen: (v: boolean) => void;
+};
+
+export default function ProfileMenu({ profileOpen, setProfileOpen }: Props) {
+  const navigate = useNavigate();
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [pos, setPos] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
+
+  useEffect(() => {
+    if (!profileOpen || !btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    setPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right });
+  }, [profileOpen]);
+
+  const go = (to: string) => {
+    navigate({ to });
+    setProfileOpen(false);
+  };
+
   return (
     <div className="relative">
       <button
+        ref={btnRef}
         onClick={() => setProfileOpen(!profileOpen)}
         className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center hover:ring-2 hover:ring-indigo-500 transition"
+        aria-label="Abrir menú de perfil"
       >
         <User size={20} className="text-gray-600" />
       </button>
 
-      {/* Dropdown */}
-      <div
-        className={`absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-lg z-50 transform transition-all duration-300 ${
-          profileOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
-        }`}
-      >
-        <ul className="text-sm text-gray-700">
-          <li>
-            <a href="#" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-              <User size={16} /> Mi perfil
-            </a>
-          </li>
-          <li>
-            <a href="#" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100">
-              <Settings size={16} /> Configuración
-            </a>
-          </li>
-          <li>
-            <button className="w-full text-left flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-red-500">
-              <LogOut size={16} /> Cerrar sesión
-            </button>
-          </li>
-        </ul>
-      </div>
+      {profileOpen &&
+        createPortal(
+          <>
+            {/* Backdrop para cerrar y garantizar clics */}
+            <div
+              className="fixed inset-0 z-[1000]"
+              onMouseDown={() => setProfileOpen(false)}
+            />
+
+            {/* Dropdown fijo en pantalla, por encima de todo */}
+            <div
+              className="fixed z-[1001] w-44 bg-white border rounded-md shadow-lg"
+              style={{ top: pos.top, right: pos.right }}
+              onMouseDown={(e) => e.stopPropagation()} // evita cerrar al clicar dentro
+            >
+              <ul className="py-1 text-sm text-gray-700">
+                <li>
+                  <button
+                    onMouseDown={() => go("/dashboard/users/profile")}
+                    className="w-full text-left flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                  >
+                    <User size={16} /> Mi perfil
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onMouseDown={() => go("/dashboard/settings")}
+                    className="w-full text-left flex items-center gap-2 px-4 py-2 hover:bg-gray-100"
+                  >
+                    <Settings size={16} /> Configuración
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onMouseDown={() => {
+                      // tu lógica de logout aquí
+                      setProfileOpen(false);
+                    }}
+                    className="w-full text-left flex items-center gap-2 px-4 py-2 hover:bg-gray-100 text-red-500"
+                  >
+                    <LogOut size={16} /> Cerrar sesión
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </>,
+          document.body
+        )}
     </div>
   );
-};
-
-export default ProfileMenu;
+}
