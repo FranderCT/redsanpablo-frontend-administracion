@@ -46,7 +46,7 @@ export default function ProfileMenu({ profileOpen, setProfileOpen }: Props) {
 
             {/* Dropdown fijo en pantalla, por encima de todo */}
             <div
-              className="fixed z-[1001] w-44 bg-white border rounded-md shadow-lg"
+              className="fixed z-[1001] w-44 bg-white border rounded shadow-lg"
               style={{ top: pos.top, right: pos.right }}
               onMouseDown={(e) => e.stopPropagation()} // evita cerrar al clicar dentro
             >
