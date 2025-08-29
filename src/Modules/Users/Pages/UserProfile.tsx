@@ -7,7 +7,7 @@ const Profile = () => {
   const { UserProfile } = useGetUserProfile?.();
 
   return (
-    <main className="min-h-full w-full h-full bg-[#f9fafb] flex items-center justify-center border">
+    <main className="min-h-full w-full h-full bg-[#f9fafb] flex items-center justify-center">
       <div className="mx-auto max-w-6xl px-4 py-8  h-auto w-full ">
         {/* Header */}
         <HeaderUserProfile />

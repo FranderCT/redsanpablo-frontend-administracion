@@ -3,9 +3,16 @@ import {
   Users2,
 } from "lucide-react";
 import { useLogout } from "../../../Auth/Hooks/AuthHooks";
+import { useNavigate } from "@tanstack/react-router";
 
 
 const AsideDashboard = () => {
+
+  const navigate = useNavigate();
+
+  const goUsers = () => {
+    navigate({to : '/dashboard/users'})
+  }
 
   const logout = useLogout();
 
@@ -18,9 +25,9 @@ const AsideDashboard = () => {
 
         {/* Navegación */}
         <nav className="flex flex-col gap-4 text-sm text-gray-700">
-          <a href="#" className="flex items-center gap-3 hover:text-black">
+          <button onClick={goUsers} className="flex items-center gap-3 hover:text-black">
             <Users2 size={18} /> Usuarios
-          </a>
+          </button>
         </nav>
       </div>
 
