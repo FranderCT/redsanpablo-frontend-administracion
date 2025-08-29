@@ -29,17 +29,19 @@ const LoginUser = () => {
   });
 
   return (
-    <div
+   <div
       className="
         relative
-        w-[90%] sm:w-[80%] md:w-[60%] lg:w-[45%]
-         md:h-[40%] h-[70%] lg:h-[80%] 
-        bg-white border border-gray-200 p-6 sm:p-8
-        flex flex-col items-center justify-center xl:h-[50%] xl:w-[30%]
-        shadow-xl
-        gap-10
+        w-[95%] sm:w-[85%] md:w-[65%] lg:w-[45%] xl:w-[30%] 2xl:w-[25%]
+        h-[75%] sm:h-[70%] md:h-[60%] lg:h-[65%] xl:h-[55%] 2xl:h-[50%]
+        bg-white border border-gray-200 
+        p-4 sm:p-6 md:p-8
+        flex flex-col items-center justify-center
+        shadow-xl rounded-2xl
+        gap-6 sm:gap-8 md:gap-10
       "
     >
+
       {/* Marca de agua */}
       <img
         src={g29}
