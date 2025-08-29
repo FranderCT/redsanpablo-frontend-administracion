@@ -32,12 +32,12 @@ const LoginUser = () => {
     <div
       className="
         relative
-        w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%]
-        h-[60%] md:h-[40%]
-        max-w-md sm:min-w-[320px]
+        w-[90%] sm:w-[80%] md:w-[60%] lg:w-[45%]
+         md:h-[40%] h-[70%] lg:h-[80%] 
         bg-white border border-gray-200 p-6 sm:p-8
-        flex flex-col items-center justify-center
+        flex flex-col items-center justify-center xl:h-[50%] xl:w-[30%]
         shadow-xl
+        gap-10
       "
     >
       {/* Marca de agua */}
