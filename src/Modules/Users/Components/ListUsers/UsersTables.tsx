@@ -1,97 +1,116 @@
-// Components/UsersTable.tsx
+import { useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
+  getPaginationRowModel,
   flexRender,
-  type ColumnDef,
-
 } from "@tanstack/react-table";
 import type { Users } from "../../Models/Users";
+import { usersColumns } from "./Columns";
+import PageSizeSelect from "./Table/PageSizeSelect";
+import PaginationControls from "./Table/PaginationControls";
 
-type Props = {
-  data: Users[];
-};
+type Props = { data: Users[] };
 
 const UsersTable = ({ data }: Props) => {
-  const columns: ColumnDef<Users>[] = [
-    {
-      id: "FullName",
-      header: "Nombre completo",
-      cell: ({ row }) => {
-        const { Name, Surname1, Surname2 } = row.original;
-        return `${Name} ${Surname1} ${Surname2}`;
-      },
-    },
-    {
-      accessorKey: "Nis",
-      header: "Nis"
-    },
-    {
-      accessorKey : "IDcard",
-      header : "Cédula"
-    },
-    {
-      accessorKey: "Email",
-      header: "Correo",
-    },
-    {
-      accessorKey: "PhoneNumber",
-      header: "Teléfono",
-    },
-    {
-      accessorKey: "Roles",
-      header: "Roles",
-      cell: ({ row }) =>
-        row.original.Roles.map((r) => r.Rolname).join(", ") || "Sin rol",
-    },
-    {
-      accessorKey: "IsActive",
-      header: "Estatus",
-      cell: ({ row }) => {
-      return row.original.IsActive ? "Activo" : "Inactivo";
-      },
-    }
-    ,
-    {
-      accessorKey : "Address",
-      header : "Direccion"
-    }
-  ];
-
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
   const table = useReactTable({
     data,
-    columns,
+    columns: usersColumns,
+    state: { pagination },
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(), // paginación local
   });
 
-  return (
-    <div className="overflow-x-aut border shadow-xl">
-      <table className="min-w-full ">
-        <thead className="border-b">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="px-4 py-2 text-[#091540]">
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-100 ">
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="px-4 py-2 ">
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  // Rango mostrado (para el resumen)
+  const { pageIndex, pageSize } = table.getState().pagination;
 
+  return (
+    <div className="space-y-4 w-[90%] ">
+      {/* Controles superiores compactos */}
+      <div className="flex items-center gap-3 ">
+        <PageSizeSelect
+          value={pageSize}
+          onChange={(size) => table.setPageSize(size)}
+        />
+        <span className="ml-auto text-sm text-gray-600">
+          Total registros: <b>{data.length}</b>
+        </span>
+      </div>
+
+      {/* Tabla con bordes colapsados y footer con controles */}
+      <div className="overflow-x-auto  shadow-xl">
+        <table className="min-w-full border-collapse border border-gray-300">
+          <thead className="bg-[#e9e8e8]">
+            {table.getHeaderGroups().map((hg) => (
+              <tr key={hg.id}>
+                {hg.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="px-4 py-2 text-left text-[#091540] border border-gray-300"
+                  >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id} className="hover:bg-gray-50">
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id} className="px-4 py-2 border border-gray-300">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
+
+            {table.getRowModel().rows.length === 0 && (
+              <tr>
+                <td
+                  className="px-4 py-6 text-center text-gray-500 border border-gray-300"
+                  colSpan={table.getVisibleLeafColumns().length}
+                >
+                  No hay datos para mostrar
+                </td>
+              </tr>
+            )}
+          </tbody>
+
+          {/* Controles de paginación dentro de la tabla */}
+          <tfoot className="bg-gray-50">
+            <tr>
+              <td
+                colSpan={table.getVisibleLeafColumns().length}
+                className="px-4 py-3 border border-gray-300"
+              >
+                <div className="flex flex-wrap items-center justify-center gap-3">
+
+                  {/* Controles centrados */}
+                  <div className="mx-auto">
+                    <PaginationControls
+                      canPrev={table.getCanPreviousPage()}
+                      canNext={table.getCanNextPage()}
+                      pageIndex={pageIndex}
+                      pageCount={table.getPageCount()}
+                      onFirst={() => table.setPageIndex(0)}
+                      onPrev={() => table.previousPage()}
+                      onNext={() => table.nextPage()}
+                      onLast={() => table.setPageIndex(table.getPageCount() - 1)}
+                      onGotoPage={(p) => table.setPageIndex(p)}
+                    />
+                  </div>
+
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </div>
   );
 };

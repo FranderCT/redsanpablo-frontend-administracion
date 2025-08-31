@@ -44,7 +44,7 @@ export const useForgotPasswd = () => {
             console.log('Correo enviado')
         },
         onError: () =>{
-          console.log('error')
+          console.log('error aqui')
         }
     })
     return mutation;

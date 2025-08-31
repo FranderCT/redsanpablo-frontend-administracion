@@ -9,7 +9,7 @@ const ListUsers = () => {
   if (error) return <p>Ocurrió un error cargando usuarios</p>;
 
   return (
-    <div>
+    <div className="border h-full w-full flex items-center justify-center">
       {usersProfiles && <UsersTable data={usersProfiles} />}
     </div>
   );
