@@ -9,11 +9,14 @@ import type { Users } from "../../Models/Users";
 import { usersColumns } from "./Columns";
 import PageSizeSelect from "./Table/PageSizeSelect";
 import PaginationControls from "./Table/PaginationControls";
+import OpenModalButton from "../OpenModalButton";
+import AddUserModal from "./Table/AddUserModal";
 
 type Props = { data: Users[] };
 
 const UsersTable = ({ data }: Props) => {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [open, setOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -35,6 +38,9 @@ const UsersTable = ({ data }: Props) => {
           value={pageSize}
           onChange={(size) => table.setPageSize(size)}
         />
+
+        <OpenModalButton onOpen={() => setOpen(true)} label="Nuevo Usuario" />
+
         <span className="ml-auto text-sm text-gray-600">
           Total registros: <b>{data.length}</b>
         </span>
@@ -57,7 +63,7 @@ const UsersTable = ({ data }: Props) => {
               </tr>
             ))}
           </thead>
-
+            
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id} className="hover:bg-gray-50">
@@ -111,6 +117,7 @@ const UsersTable = ({ data }: Props) => {
           </tfoot>
         </table>
       </div>
+       <AddUserModal open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };

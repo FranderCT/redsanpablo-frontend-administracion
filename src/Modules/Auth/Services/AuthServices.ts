@@ -3,6 +3,7 @@ import type { Auth } from "../Models/Auth";
 import type { AuthResponse } from "../Models/AuthResponse";
 import type { changePassword } from "../Models/changePassword";
 import type { ForgotPassword, ForgotPasswordResponse } from "../Models/ForgotPassword";
+import type { RegisterUser } from "../Models/RegisterUser";
 import type { ResetPassword } from "../Models/ResetPassword";
 
 
@@ -27,4 +28,9 @@ export async function ChangePasswd (payload: changePassword, token: string): Pro
 export async function ForgotPasswd(payload : ForgotPassword) : Promise<ForgotPasswordResponse>{
   const res = await apiAxios.post<ForgotPasswordResponse>(`/auth/forgot-password`, payload);
   return res.data;
+}
+
+export async function createUser(user: RegisterUser): Promise<RegisterUser> {
+  const response = await apiAxios.post<RegisterUser>(`/auth/register`, user);
+  return response.data;
 }

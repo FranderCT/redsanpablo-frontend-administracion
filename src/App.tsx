@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { routeTree } from './Routes';
 import './App.css';
+import 'react-responsive-modal/styles.css';
 
 const queryClient = new QueryClient();
 

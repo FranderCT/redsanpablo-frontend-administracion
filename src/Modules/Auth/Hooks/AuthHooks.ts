@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import { ForgotPasswd, Login, ResetPasswd } from "../Services/AuthServices";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createUser, ForgotPasswd, Login, ResetPasswd } from "../Services/AuthServices";
 import { useNavigate } from "@tanstack/react-router";
 import type { ResetPassword } from "../Models/ResetPassword";
 
@@ -10,6 +10,19 @@ export const useLogin = () => {
             localStorage.setItem('token', res.token);
         }
     })
+    return mutation;
+}
+
+export const useCreateUser = () => {
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: createUser,
+        onSuccess: () => { 
+            queryClient.invalidateQueries({ queryKey: ['users'] });
+        },
+    });
+
     return mutation;
 }
 
