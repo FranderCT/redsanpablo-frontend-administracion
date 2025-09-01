@@ -1,4 +1,3 @@
-
 import { type ColumnDef } from "@tanstack/react-table";
 import type { Users } from "../../Models/Users";
 
@@ -18,7 +17,8 @@ export const usersColumns: ColumnDef<Users>[] = [
   {
     accessorKey: "Roles",
     header: "Roles",
-    cell: ({ row }) => row.original.Roles.map((r) => r.Rolname).join(", ") || "Sin rol",
+    cell: ({ row }) =>
+      row.original.Roles.map((r) => r.Rolname).join(", ") || "Sin rol",
   },
   {
     accessorKey: "IsActive",
@@ -26,5 +26,28 @@ export const usersColumns: ColumnDef<Users>[] = [
     cell: ({ row }) => (row.original.IsActive ? "Activo" : "Inactivo"),
   },
   { accessorKey: "Address", header: "Dirección" },
-  {accessorKey: "Acciones", header : "Acciones"},
+  {
+    id: "Acciones",
+    header: "Acciones",
+    cell: ({ row }) => {
+      const user = row.original;
+
+      return (
+        <div className="flex gap-2">
+          <button
+            onClick={() => console.log("Editar", user)}
+            className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Editar
+          </button>
+          <button
+            onClick={() => console.log("Eliminar", user)}
+            className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Eliminar
+          </button>
+        </div>
+      );
+    },
+  },
 ];
