@@ -1,7 +1,10 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import type { Users } from "../../Models/Users";
 
-export const usersColumns: ColumnDef<Users>[] = [
+export const usersColumns = (
+  onEdit: (user: Users) => void,
+  onDelete: (id: number) => void
+): ColumnDef<Users>[] => [
   {
     id: "FullName",
     header: "Nombre completo",
@@ -35,13 +38,13 @@ export const usersColumns: ColumnDef<Users>[] = [
       return (
         <div className="flex gap-2">
           <button
-            onClick={() => console.log("Editar", user)}
+            onClick={() => onEdit(user)}
             className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Editar
           </button>
           <button
-            onClick={() => console.log("Eliminar", user)}
+            onClick={() => onDelete(user.Id) }
             className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
           >
             Eliminar

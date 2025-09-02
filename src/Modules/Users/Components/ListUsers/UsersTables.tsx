@@ -6,28 +6,41 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import type { Users } from "../../Models/Users";
-import { usersColumns } from "./Columns";
+import { usersColumns as makeUsersColumns } from "./Columns";
 import PageSizeSelect from "./Table/PageSizeSelect";
 import PaginationControls from "./Table/PaginationControls";
 import OpenModalButton from "../OpenModalButton";
 import AddUserModal from "./Table/AddUserModal";
+import { useDeleteUser } from "../../Hooks/UsersHooks";
 
 type Props = { data: Users[] };
 
 const UsersTable = ({ data }: Props) => {
+  const deleteUserMutation = useDeleteUser();
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
   const [open, setOpen] = useState(false);
 
+  // Handlers para acciones
+  const handleEdit = (user: Users) => {
+    console.log("Editar usuario:", user);
+    // aquí abres tu modal de edición
+  };
+
+  const handleDelete = (id: number) => {
+    const ok = window.confirm("¿Eliminar este usuario?");
+    if (!ok) return;
+    deleteUserMutation.mutateAsync(id);
+  };
+
   const table = useReactTable({
     data,
-    columns: usersColumns,
+    columns: makeUsersColumns(handleEdit, handleDelete),
     state: { pagination },
     onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), // paginación local
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
-  // Rango mostrado (para el resumen)
   const { pageIndex, pageSize } = table.getState().pagination;
 
   return (
@@ -39,7 +52,7 @@ const UsersTable = ({ data }: Props) => {
           onChange={(size) => table.setPageSize(size)}
         />
 
-        <OpenModalButton onOpen={() => setOpen(true)} label="Nuevo Usuario" />
+        <OpenModalButton onOpen={() => setOpen(true)} label="Añadir un Nuevo Usuario" />
 
         <span className="ml-auto text-sm text-gray-600">
           Total registros: <b>{data.length}</b>
@@ -57,16 +70,19 @@ const UsersTable = ({ data }: Props) => {
                     key={header.id}
                     className="px-4 py-2 text-left text-[#091540] border border-gray-300"
                   >
-                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
-            
+
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-gray-50">
+              <tr key={row.original.Id} className="hover:bg-gray-50">
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="px-4 py-2 border border-gray-300">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -87,7 +103,6 @@ const UsersTable = ({ data }: Props) => {
             )}
           </tbody>
 
-          {/* Controles de paginación dentro de la tabla */}
           <tfoot className="bg-gray-50">
             <tr>
               <td
@@ -95,8 +110,6 @@ const UsersTable = ({ data }: Props) => {
                 className="px-4 py-3 border border-gray-300"
               >
                 <div className="flex flex-wrap items-center justify-center gap-3">
-
-                  {/* Controles centrados */}
                   <div className="mx-auto">
                     <PaginationControls
                       canPrev={table.getCanPreviousPage()}
@@ -106,18 +119,20 @@ const UsersTable = ({ data }: Props) => {
                       onFirst={() => table.setPageIndex(0)}
                       onPrev={() => table.previousPage()}
                       onNext={() => table.nextPage()}
-                      onLast={() => table.setPageIndex(table.getPageCount() - 1)}
+                      onLast={() =>
+                        table.setPageIndex(table.getPageCount() - 1)
+                      }
                       onGotoPage={(p) => table.setPageIndex(p)}
                     />
                   </div>
-
                 </div>
               </td>
             </tr>
           </tfoot>
         </table>
       </div>
-       <AddUserModal open={open} onClose={() => setOpen(false)} />
+
+      <AddUserModal open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };

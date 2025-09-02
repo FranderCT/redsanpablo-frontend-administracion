@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
-import { getAllUsers, getUserProfile, updateUserProfile } from "../Services/UsersServices";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteUser, getAllUsers, getUserProfile, updateUserProfile } from "../Services/UsersServices";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 export const useGetUserProfile = () => {
@@ -31,3 +31,12 @@ export const useGetAllUsers = () => {
   return { usersProfiles, isPending, error };
 };
 
+export function useDeleteUser() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: deleteUser,
+     onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['users'] })
+    },
+  })
+}
