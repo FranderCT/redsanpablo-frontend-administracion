@@ -45,7 +45,7 @@ const UsersTable = ({ data }: Props) => {
   const { pageIndex, pageSize } = table.getState().pagination;
 
   return (
-    <div className="space-y-4 w-[70%] ">
+    <div className="space-y-4 w-[100%] ">
       {/* Controles superiores compactos */}
       <div className="flex items-center gap-3 ">
         <PageSizeSelect
