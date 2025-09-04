@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import { deleteUser, getAllUsers, getUserProfile, updateUserProfile } from "../Services/UsersServices";
+import { deleteUser, getAllUsers, getUserProfile, updateUserProfile, updateUsers } from "../Services/UsersServices";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { EditUser } from "../Models/EditUser";
 
 
 export const useGetUserProfile = () => {
@@ -22,6 +23,17 @@ export const useUpdateUserProfile = () => {
     },
   });
 };
+
+export const useUpdateUser = () => {
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: number; payload: EditUser }) =>
+      updateUsers(id, payload),
+    onSuccess: () => {
+      console.log('usuario actualizado');
+    },
+  });
+};
+
 
 export const useGetAllUsers = () => {
   const { data: usersProfiles, isPending, error } = useQuery({

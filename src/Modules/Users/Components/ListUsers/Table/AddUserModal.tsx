@@ -1,8 +1,5 @@
 // ./Table/AddUserModal.tsx
 import { Modal } from 'react-responsive-modal';
-import { useForm } from '@tanstack/react-form';
-import { useCreateUser } from '../../../../Auth/Hooks/AuthHooks';
-import { RegisterUserInitialState } from '../../../../Auth/Models/RegisterUser';
 import RegisterAbonados from '../../../../Auth/Pages/RegisterAbonado';
 
 type MyModalProps = {
@@ -11,29 +8,8 @@ type MyModalProps = {
 };
 
 const AddUserModal = ({ open, onClose }: MyModalProps) => {
-  const createUserMutation = useCreateUser();
-
-  const form = useForm({
-    defaultValues: RegisterUserInitialState,
-    // validators: { onChange: RegisterSchema },
-    onSubmit: async ({ value }) => {
-      if (value.Password !== value.ConfirmPassword) {
-        alert('Las contraseñas no coinciden');
-        return;
-      }
-      const { IsAbonado, ...userData } = value;
-      try {
-        await createUserMutation.mutateAsync(userData);
-        form.reset();
-        onClose();
-      } catch {
-        form.reset();
-      }
-    },
-  });
-
+  
   const handleClose = () => {
-    form.reset();
     onClose();
   };
 

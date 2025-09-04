@@ -15,6 +15,11 @@ export async function updateUserProfile(User: EditUser) : Promise<EditUser>{
   return res.data;
 }
 
+export async function updateUsers (id: number, payloads : EditUser): Promise<Users> {
+  const res = await apiAxios.put(`users/${id}`, payloads);
+  return res.data;
+}
+
 export async function getAllUsers(): Promise<Users[]> {
   const res = await apiAxios.get<Users[]>("/users");
   return res.data;
