@@ -21,8 +21,8 @@ const UsersTable = ({ data }: Props) => {
   const [open, setOpen] = useState(false);
 
   // Handlers para acciones
-  const handleEdit = (user: Users) => {
-    console.log("Editar usuario:", user);
+  const handleEdit = (id: number) => {
+    console.log("Editar usuario:", id);
     // aquí abres tu modal de edición
   };
 
@@ -30,6 +30,7 @@ const UsersTable = ({ data }: Props) => {
     const ok = window.confirm("¿Eliminar este usuario?");
     if (!ok) return;
     deleteUserMutation.mutateAsync(id);
+    console.log('usuario eliminado');
   };
 
   const table = useReactTable({
@@ -44,7 +45,7 @@ const UsersTable = ({ data }: Props) => {
   const { pageIndex, pageSize } = table.getState().pagination;
 
   return (
-    <div className="space-y-4 w-[90%] ">
+    <div className="space-y-4 w-[70%] ">
       {/* Controles superiores compactos */}
       <div className="flex items-center gap-3 ">
         <PageSizeSelect

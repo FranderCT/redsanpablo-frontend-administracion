@@ -29,7 +29,7 @@ export const useUpdateUser = () => {
     mutationFn: ({ id, payload }: { id: number; payload: EditUser }) =>
       updateUsers(id, payload),
     onSuccess: () => {
-      console.log('usuario actualizado');
+      // User updated successfully
     },
   });
 };
